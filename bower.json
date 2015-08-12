@@ -13,6 +13,7 @@
     "jquery": "~2.0",
     "modernizr": "~2.6.3",
     "respond": "~1.4.2",
-    "font-awesome": "~4.0.3"
+    "font-awesome": "~4.0.3",
+    "highlightjs": "~8.7.0"
   }
 }

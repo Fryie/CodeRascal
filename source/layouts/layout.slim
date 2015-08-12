@@ -15,18 +15,26 @@ html
     div#main
       = partial 'partials/nav'
 
-      - unless current_article.nil?
-        h1
-          = current_article.title
-        - current_article.tags.each do |tag|
-          small.tag
-            = tag
-        p
-          span
-            | Posted on
-          = current_article.date.strftime('%b %e')
+      - if current_article.nil?
+        = yield
 
-      = yield
+      - else
+        article
+          h1
+            = current_article.title
+          p
+            span.article-date
+              ' Posted on
+              = current_article.date.strftime('%b %e')
+
+          = yield
+
+        p
+          ' Tags:
+          - current_article.tags.each_with_index do |tag, i|
+            = link_to tag, tag_path(tag), class: 'tag'
+            - unless i == current_article.tags.length - 1
+              ' ,
 
       = partial 'partials/footer'
 

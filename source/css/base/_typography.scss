@@ -34,6 +34,8 @@
   font-style: normal;
 }
 
+@import url(http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300);
+
 body {
   @include font-feature-settings("kern", "liga", "pnum");
   -webkit-font-smoothing: antialiased;
@@ -88,4 +90,17 @@ img,
 picture {
   margin: 0;
   max-width: 100%;
+}
+
+.tag {
+  font-style: italic;
+}
+
+.article-date {
+  font-style: italic;
+}
+
+code {
+  font-size: $code-font-size;
+  font-family: $code-font-family;
 }

@@ -3,27 +3,4 @@ pageable: true
 per_page: 10
 ---
 
-ul
-  - page_articles.each_with_index do |article, i|
-    li
-      h3
-        = link_to article.title, article
-      h5
-        = article.date.strftime('%b %e')
-      p
-        = article.body
-
-- if paginate
-  - if num_pages > 1
-    ul.pager
-      - if page_number > 1
-        li.previous
-          = link_to '&larr;', prev_page
-      span
-        | Page
-        = page_number
-        |  of
-        = num_pages
-      - if page_number < num_pages
-        li.next
-          = link_to '&rarr;', next_page
+= partial 'partials/article_listing'

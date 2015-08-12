@@ -4,8 +4,10 @@
 
 Time.zone = 'Europe/Berlin'
 
+activate :directory_indexes
+
 activate :blog do |blog|
-  # blog.permalink = "{year}/{month}/{day}/{title}.html"
+  blog.permalink = "{category}/{title}"
   # Matcher for blog source files
   blog.sources = "posts/{year}-{month}-{day}-{title}.html"
   # blog.taglink = "tags/{tag}.html"
@@ -59,7 +61,7 @@ Slim::Engine.set_default_options :shortcut => {
 }
 
 # Markdown settings
-set :markdown, :tables => true, :autolink => true, :gh_blockcode => true, :fenced_code_blocks => true, :with_toc_data => true
+set :markdown, :tables => true, :autolink => true, :gh_blockcode => true, :fenced_code_blocks => true, :with_toc_data => true, :smartypants => true
 set :markdown_engine, :redcarpet
 
 # Per-page layout changes:
@@ -102,8 +104,8 @@ activate :livereload
 # Set site setting, used in helpers / sitemap.xml / feed.xml.
 set :site_url, 'http://blog.url.com'
 set :site_author, 'Pierpaolo Frasa'
-set :site_title, 'CodeBlog'
-set :site_description, 'Ruminations about Coding'
+set :site_title, 'Code Rascal'
+set :site_description, 'Blogging about Ruby and JavaScript development'
 @analytics_account = false
 
 # Asset Settings

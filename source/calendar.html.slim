@@ -2,7 +2,7 @@
 pageable: true
 ---
 h1
-  | Archive for
+  ' Archive for
   - case page_type
   - when 'day'
     = Date.new(year, month, day).strftime('%b %e %Y')
@@ -10,6 +10,7 @@ h1
     = Date.new(year, month, 1).strftime('%b %Y')
   - else
     = year
+
 - if paginate && num_pages > 1
   p
     | Page
@@ -19,24 +20,5 @@ h1
   - if prev_page
     p
       = link_to 'Previous page', prev_page
-ul
-  - page_articles.each_with_index do |article, i|
-    h2
-      = link_to article.title, article
-    p
-      - article.tags.each do |tag|
-        small.tag
-          = tag
-    hr
-    p
-      span
-      |  Posted on
-      = article.date.strftime('%b %e')
-    hr
-    = article.summary
-    a href=article.url
-      | Read More
-- if paginate
-  - if next_page
-    p
-      = link_to 'Next page', next_page
+
+= partial 'partials/article_listing'

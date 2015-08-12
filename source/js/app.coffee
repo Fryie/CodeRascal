@@ -1,5 +1,0 @@
-(($) ->
-  $(window).on('load', () ->
-
-  )
-)(jQuery)
