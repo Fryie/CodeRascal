@@ -4,8 +4,6 @@
 
 Time.zone = 'Europe/Berlin'
 
-activate :directory_indexes
-
 activate :blog do |blog|
   blog.permalink = "{category}/{title}"
   # Matcher for blog source files
@@ -27,6 +25,9 @@ activate :blog do |blog|
   blog.per_page = 10
   # blog.page_link = "page/{num}"
 end
+
+# order is important, this has to be activated AFTER blog
+activate :directory_indexes
 
 page "/feed.xml", layout: false
 page "/sitemap.xml", layout: false
