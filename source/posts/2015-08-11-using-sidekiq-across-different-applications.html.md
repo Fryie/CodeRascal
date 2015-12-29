@@ -5,7 +5,7 @@ category: ruby
 tags: ruby, sidekiq, SOA
 ---
 
-In a project I worked on, we wanted to split the big monolith application we had into several smaller repositories. In particular, we wanted the user-facing part of our application to be completely separate from the administrative backend. This is all nice and well, but then we had to consider how we can still make sure that jobs such as sending email are properly enqueued and executed. Since we were using Sidekiq, which just runs atop of a Redis store, this is not hard to do in principle: You just put some items in your queue from one repository and read from that same queue in the other repository.
+In a project I was working on, we wanted to split the big monolith application we had into several smaller repositories. In particular, we wanted the user-facing part of our application to be completely separate from the administrative backend. This is all nice and well, but then we had to consider how we can still make sure that jobs such as sending email are properly enqueued and executed. Since we were using Sidekiq, which just runs atop of a Redis store, this is not hard to do in principle: You just put some items in your queue from one repository and read from that same queue in the other repository.
 
 READMORE
 
@@ -35,13 +35,18 @@ Then at some other point in your code you can enqueue a job
 EmailWorker.perform_async('test@example.org', 'Hello World')
 ```
 
-If you're in Rails, you can just run ```bundle exec sidekiq``` from your project root and Sidekiq will start and automatically pick up any work for which there is a corresponding worker in the project (if you're not using Rails, see e.g. [here](https://github.com/mperham/sidekiq/blob/master/examples/por.rb)). For more details, check the [Sidekiq Wiki](https://github.com/mperham/sidekiq/wiki).
+If you're in Rails, you can just run ```bundle exec sidekiq``` from your project root and Sidekiq will start and automatically pick up any work for which there is a corresponding worker in the project (for more details, check the [Sidekiq Wiki](https://github.com/mperham/sidekiq/wiki)).
 
 But what happens when you have two different repositories, one which enqueues jobs and one which dequeues them? (In practice both projects could be enqueueing and dequeueing jobs, but let's keep it simple.) If the ```EmailWorker``` is only in the project that actually executes the job, you cannot call ```EmailWorker#perform_async``` in the other repository. But remember that Sidekiq just runs atop of Redis - it just pushes jobs to some queues and reads from those queues. Instead of the more "magical" ```perform_async``` syntax, you can also drop down to a slightly lower level and do the following to enqueue a job:
 
 ```ruby
 require 'sidekiq'
-Sidekiq::Client.push class: 'EmailWorker', queue: 'email', retry: false, args: ['test@example.org', 'Hello World']
+Sidekiq::Client.push(
+  class: 'EmailWorker',
+  queue: 'email',
+  retry: false,
+  args: ['test@example.org', 'Hello World']
+)
 ```
 
 Notice that the ```class``` option is just a string here. This is nice, since it keeps the code decoupled from the actual implementation of the ```EmailWorker```. The enqueuing repository does not need to be concerned with how the actual worker is implemented in another project - in fact it's even possible that the ```EmailWorker``` doesn't exist at all.
@@ -58,7 +63,7 @@ Of course, the simplest way to mitigate these drawbacks would be to simply creat
 
 Enter worker proxies.
 
-The solution is quite simple actually: Instead of using the worker classes directly, a projects that wants to enqueue jobs for specific workers just defines *proxy* classes. These proxy classes follow a particular naming convention: An ```EmailWorkerProxy``` matches an ```EmailWorker```. They can also define their default Sidekiq options for queueing, retry behaviour etc. just like regular old Sidekiq workers. This is what a worker proxy could look like:
+The solution is quite simple actually: Instead of using the worker classes directly, a project that wants to enqueue jobs for specific workers just defines *proxy* classes. These proxy classes follow a particular naming convention: An ```EmailWorkerProxy``` matches an ```EmailWorker```. They can also define their default Sidekiq options for queueing, retry behaviour etc. just like regular old Sidekiq workers. This is what a worker proxy could look like:
 
 ```ruby
 class EmailWorkerProxy
@@ -99,4 +104,4 @@ end
 
 What this does is basically setting up the including class as a normal Worker class by including ```Sidekiq::Worker```, but then overriding the [internal #client_push method](https://github.com/mperham/sidekiq/blob/master/lib/sidekiq/worker.rb#L84). Besides merging the default options defined in the WorkerProxy file with any options passed in directly, it just replaces the 'class' option - which would be e.g. ```EmailWorkerProxy``` with the actual worker class, in this case ```EmailWorker```.
 
-To be honest, I know what some of you might be thinking right now: Utilising a private API is not really solid design and has the risk of breaking with future releases. I do understand the concern, however, I find this solution to be so elegant that I'm willing to incur this technical debt right here. Also, we're not monkey-patching any existing behaviour but just overriding a method in an inheriting module. So far the solution has worked quite well, and even if at some point we replace it, at least now I got to know Sidekiq's internals somewhat better. :)
+Now in all fairness, utilising a private API is not really solid design and has the risk of breaking with future releases. It does work well in our current projects, though, and it has a certain elegance, at least as a proof of concept. It would be nice if Sidekiq offered such an option by default.
