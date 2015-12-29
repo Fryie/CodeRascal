@@ -25,3 +25,6 @@
 .gitconfig
 
 .ruby-version
+
+# environment
+.env

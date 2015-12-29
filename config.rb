@@ -1,3 +1,6 @@
+require 'dotenv'
+Dotenv.load
+
 ###
 # Blog settings
 ###
@@ -163,12 +166,9 @@ end
 ###
 # Deploy settings
 ###
-
-# ftp deployment configuration.
-# activate :deploy do |deploy|
-#   deploy.method = :ftp
-#   deploy.host = "ftp-host"
-#   deploy.user = "ftp-user"
-#   deploy.password = "ftp-password"
-#   deploy.path = "ftp-path"
-# end
+activate :deploy do |deploy|
+  deploy.method = :rsync
+  deploy.host = ENV['DEPLOY_HOST']
+  deploy.user = ENV['DEPLOY_USER']
+  deploy.path = ENV['DEPLOY_PATH']
+end
