@@ -106,7 +106,7 @@ activate :livereload
 # Site Settings
 ###
 # Set site setting, used in helpers / sitemap.xml / feed.xml.
-set :site_url, 'http://blog.url.com'
+set :site_url, 'http://coderascal.com'
 set :site_author, 'Pierpaolo Frasa'
 set :site_title, 'Code Rascal'
 set :site_description, 'Blogging about Ruby and JavaScript development'
