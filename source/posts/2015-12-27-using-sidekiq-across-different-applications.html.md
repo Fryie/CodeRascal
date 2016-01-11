@@ -1,6 +1,6 @@
 ---
 title: Using Sidekiq across different applications
-date: 2015-08-11 23:06 CEST
+date: 2015-12-27 16:00 CET
 category: ruby
 tags: ruby, sidekiq, SOA
 ---
