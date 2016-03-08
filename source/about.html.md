@@ -1,6 +1,6 @@
 # About
 
-**Pierpaolo Frasa** is a web developer at [vertragslotse](https://www.vertragslotse.com). He works mainly with Ruby and Rails and more recently also increasingly with Javascript / EmberJS.
+**Pierpaolo Frasa** is a web developer at [volders](https://www.volders.de). He works mainly with Ruby and Rails and more recently also increasingly with Javascript / EmberJS.
 
 He can be found as [Fryie](https://github.com/Fryie) on github and as [@Tainnor](https://twitter.com/tainnor) on Twitter.
 
