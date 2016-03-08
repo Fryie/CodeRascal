@@ -2,6 +2,12 @@
   @include outer-container;
 }
 
+#article-list {
+  li {
+    margin-bottom: 30px;
+  }
+}
+
 ol {
   font-size: 1em;
   font-weight: 500;

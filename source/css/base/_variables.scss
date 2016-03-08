@@ -1,12 +1,12 @@
 // Typography
-$base-font-family: Basq, "Times New Roman", Times, serif;
+$base-font-family: "Libre Baskerville", "Times New Roman", Times, serif;
 $heading-font-family: $base-font-family;
 
 // Font Sizes
 $base-font-size: 1em;
 
 // Line height
-$base-line-height: 1.5;
+$base-line-height: 1.8;
 $heading-line-height: 1.2;
 
 // Other Sizes
@@ -35,5 +35,5 @@ $form-box-shadow: inset 0 1px 3px rgba(#000, 0.06);
 $form-box-shadow-focus: $form-box-shadow, 0 0 5px adjust-color($action-color, $lightness: -5%, $alpha: -0.3);
 
 // Code
-$code-font-family: Inconsolata, monospace;
-$code-font-size: 1.1em;
+$code-font-family: 'Source Code Pro', monospace;
+$code-font-size: 1em;
