@@ -5,7 +5,7 @@ category: ruby
 tags: ruby, sneakers, rabbitmq, SOA
 ---
 
-Everybody is talking about microservices, but I haven't seen a lot of good, comprehensive descriptions about how to actually *write* a microservice in Ruby. This may be because a significant number of Ruby developers are still most comfortable with Rails (which is not a bad thing in and of itself, but it's not all Ruby is capable of).
+Everybody is talking about microservices, but I haven't seen a lot of good, comprehensive descriptions of how to actually *write* a microservice in Ruby. This may be because a significant number of Ruby developers are still most comfortable with Rails (which is not a bad thing in and of itself, but it's not all Ruby is capable of).
 
 So I want to offer my account.
 
