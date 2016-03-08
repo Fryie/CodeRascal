@@ -1,6 +1,6 @@
 ---
 title: Writing a microservice in Ruby
-date: 2016-03-07 22:07 CET
+date: 2016-03-08 22:12 CET
 category: ruby
 tags: ruby, sneakers, rabbitmq, SOA
 ---
